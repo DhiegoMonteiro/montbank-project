@@ -1,6 +1,5 @@
-package com.montbank.ms.user.dtos;
+package com.montbank.ms.transaction.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;

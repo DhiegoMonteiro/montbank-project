@@ -1,4 +1,4 @@
-package com.montbank.ms.user.models;
+package com.montbank.ms.transaction.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;

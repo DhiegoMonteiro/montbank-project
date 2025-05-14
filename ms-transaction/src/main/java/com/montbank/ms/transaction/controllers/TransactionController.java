@@ -1,9 +1,8 @@
-package com.montbank.ms.user.controllers;
+package com.montbank.ms.transaction.controllers;
 
-import com.montbank.ms.user.dtos.TransactionDTO;
-import com.montbank.ms.user.models.TransactionModel;
-import com.montbank.ms.user.services.TransactionService;
-import com.montbank.ms.user.services.UserService;
+import com.montbank.ms.transaction.dtos.TransactionDTO;
+import com.montbank.ms.transaction.models.TransactionModel;
+import com.montbank.ms.transaction.services.TransactionService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
