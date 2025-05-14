@@ -28,9 +28,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
     }
     @PostMapping("/login")
-    public  ResponseEntity<UserModel> loginUser(@RequestBody @Valid UserLoginDTO userLoginDTO) {
-        UserModel userModel = new UserModel();
-        BeanUtils.copyProperties(userLoginDTO, userModel);
-        return  ResponseEntity.status(HttpStatus.OK).build();
+    public  ResponseEntity<String> loginUser(@RequestBody @Valid UserLoginDTO userLoginDTO) {
+        String token = userService.loginUser(userLoginDTO.email(), userLoginDTO.password());
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 }
