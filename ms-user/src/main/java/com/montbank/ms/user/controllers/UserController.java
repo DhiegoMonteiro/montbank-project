@@ -25,9 +25,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserModel> registerUser(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
-        var userModel = new UserModel();
-        BeanUtils.copyProperties(userRegisterDTO, userModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRegisterDTO));
     }
     @PostMapping("/login")
     public  ResponseEntity<String> loginUser(@RequestBody @Valid UserLoginDTO userLoginDTO) {
