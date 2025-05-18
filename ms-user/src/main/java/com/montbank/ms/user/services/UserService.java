@@ -35,11 +35,26 @@ public class UserService {
 
     public String loginUser(String email, String password) {
         UserModel user = userRepository.findByEmail(email).orElseThrow(()
-                -> new EntityNotFoundException("Usuário não encontrado"));
+                -> new EntityNotFoundException("Credenciais Incorretas"));
 
         if (!encoder.matches(password, user.getPassword())) {
             throw  new RuntimeException("Credenciais Incorretas");
         }
         return  tokenService.generateToken(user);
+    }
+    public boolean userExists(UUID userId){
+        return userRepository.existsById(userId);
+    }
+
+    @Transactional
+    public void updateBalance(UUID senderID, BigDecimal amount, UUID receiverID){
+        UserModel sender = userRepository.findById(senderID).orElseThrow(()
+                -> new EntityNotFoundException("Sender não encontrado"));
+        UserModel receiver = userRepository.findById(receiverID).orElseThrow(()
+                -> new EntityNotFoundException("Receiver não encontrado"));
+        sender.setBalance(sender.getBalance().subtract(amount));
+        receiver.setBalance(receiver.getBalance().add(amount));
+        userRepository.save(sender);
+        userRepository.save(receiver);
     }
 }

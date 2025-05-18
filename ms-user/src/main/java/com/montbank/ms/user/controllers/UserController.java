@@ -11,11 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 
 @RestController
+@RequestMapping("/auth")
 public class UserController {
 
     @Autowired
@@ -23,7 +25,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<UserModel> registerUser(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
-        UserModel userModel = new UserModel();
+        var userModel = new UserModel();
         BeanUtils.copyProperties(userRegisterDTO, userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
     }
@@ -32,4 +34,5 @@ public class UserController {
         String token = userService.loginUser(userLoginDTO.email(), userLoginDTO.password());
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
+
 }
