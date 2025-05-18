@@ -20,21 +20,11 @@ public class TransactionController {
 
     @Autowired
     TransactionService transactionService;
-    @Autowired
-    MessageSenderService messageSenderService;
-
 
     @PostMapping("/new")
     public ResponseEntity<TransactionModel> sendTransaction(@RequestBody @Valid TransactionRequestDTO transactionRequestDTO,
                                                             @RequestAttribute String userId) {
-            messageSenderService.sendUserValidationRequest(UUID.fromString(userId));
-            messageSenderService.sendUserValidationRequest(transactionRequestDTO.receiver());
-            var transaction = new TransactionModel();
-            BeanUtils.copyProperties(transactionRequestDTO,transaction);
-            TransactionModel savedTransaction = transactionService.save(transaction,UUID.fromString(userId));
-            messageSenderService.sendProcessedTransactionEvent(savedTransaction.getSender(),
-                    savedTransaction.getAmount(),
-                    savedTransaction.getReceiver());
+            TransactionModel savedTransaction = transactionService.save(transactionRequestDTO,UUID.fromString(userId));
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(savedTransaction);
     }
