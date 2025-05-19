@@ -1,4 +1,4 @@
-package com.montbank.ms.user.models;
+package com.montbank.ms.cards.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class CardModel implements Serializable {
     private String number;
     private LocalDate expireDate;
     private String cvv;
-    private String tipo;
+    private String type;
     private String ownerName;
     private UUID owner;
 }

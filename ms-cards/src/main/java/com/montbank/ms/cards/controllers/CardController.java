@@ -1,11 +1,9 @@
-package com.montbank.ms.user.controllers;
+package com.montbank.ms.cards.controllers;
 
-import com.montbank.ms.user.dtos.CardDTO;
-import com.montbank.ms.user.models.CardModel;
-import com.montbank.ms.user.services.CardService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.montbank.ms.cards.dtos.CardDTO;
+import com.montbank.ms.cards.models.CardModel;
+import com.montbank.ms.cards.services.CardService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,13 +36,13 @@ public class CardController {
         return ResponseEntity.status(HttpStatus.CREATED).body(cardService.generateCard(cardDTO,
                 UUID.fromString(userId), name));
     }
-    @DeleteMapping("/my-cards/delete/{cardId}")
+    @DeleteMapping("/my-cards/{cardId}/delete")
     public ResponseEntity<Void> deleteCard(@PathVariable UUID cardId,
                            @RequestAttribute String userId){
         cardService.deleteCard(UUID.fromString(userId), cardId);
         return ResponseEntity.noContent().build();
     }
-    @PutMapping("/my-cards/edit/{cardId}")
+    @PutMapping("/my-cards/{cardId}/edit")
     public ResponseEntity<Void> updateCard(@RequestBody @Valid CardDTO cardDTO,
                                            @PathVariable UUID cardId,
                                            @RequestAttribute String userId){

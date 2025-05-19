@@ -1,8 +1,8 @@
-package com.montbank.ms.user.services;
+package com.montbank.ms.cards.services;
 
-import com.montbank.ms.user.dtos.CardDTO;
-import com.montbank.ms.user.models.CardModel;
-import com.montbank.ms.user.repositories.CardRepository;
+import com.montbank.ms.cards.dtos.CardDTO;
+import com.montbank.ms.cards.models.CardModel;
+import com.montbank.ms.cards.repositories.CardRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -33,7 +32,7 @@ public class CardService {
         card.setOwner(ownerId);
         card.setCardName(cardDTO.cardName());
         card.setOwnerName(ownerName);
-        card.setTipo(cardDTO.tipo());
+        card.setType(cardDTO.type());
         card.setNumber(generateCardNumber());
         card.setExpireDate(generateExpireDate());
         card.setCvv(generateCvv());
