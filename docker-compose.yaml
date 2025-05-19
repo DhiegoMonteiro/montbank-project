@@ -55,5 +55,31 @@ services:
       SPRING_RABBITMQ_USERNAME: 'guest'
       SPRING_RABBITMQ_PASSWORD: 'guest'
 
+  cards:
+    build: ./ms-cards
+    container_name: cards
+    depends_on:
+      - postgres
+    ports:
+      - '8082:8080'
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/montbank'
+      SPRING_DATASOURCE_USERNAME: 'postgres'
+      SPRING_DATASOURCE_PASSWORD: 'montpass'
+
+  email:
+    build: ./ms-email
+    container_name: email
+    depends_on:
+      - rabbitmq
+      - user
+    ports:
+      - '8083:8080'
+    environment:
+      SPRING_RABBITMQ_HOST: 'rabbitmq'
+      SPRING_RABBITMQ_PORT: '5672'
+      SPRING_RABBITMQ_USERNAME: 'guest'
+      SPRING_RABBITMQ_PASSWORD: 'guest'
+
 volumes:
   postgres_data:
