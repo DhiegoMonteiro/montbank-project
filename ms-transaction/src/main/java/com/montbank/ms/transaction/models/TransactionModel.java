@@ -20,4 +20,5 @@ public class TransactionModel implements Serializable {
     private UUID sender;
     private BigDecimal amount;
     private UUID receiver;
+    private String title;
 }
