@@ -1,20 +1,18 @@
 package com.montbank.ms.user.controllers;
 
+import com.montbank.ms.user.dtos.UserInformationDTO;
+import com.montbank.ms.user.dtos.UserInformationUpdateDTO;
 import com.montbank.ms.user.dtos.UserLoginDTO;
 import com.montbank.ms.user.dtos.UserRegisterDTO;
 import com.montbank.ms.user.models.UserModel;
 import com.montbank.ms.user.services.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,5 +30,19 @@ public class UserController {
         String token = userService.loginUser(userLoginDTO.email(), userLoginDTO.password());
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
-
+    @GetMapping("user/profile")
+    public ResponseEntity<UserInformationDTO> getUserInformation(@RequestAttribute String userId){
+    return ResponseEntity.status(HttpStatus.FOUND).body(userService.getUserInformationById(UUID.fromString(userId)));
+    }
+    @PutMapping("user/profile/edit")
+    public ResponseEntity<Void> updateUserInformation(UserInformationUpdateDTO userInformationUpdateDTO,
+                                                      @RequestAttribute String userId){
+        userService.updateUserInformation(userInformationUpdateDTO, UUID.fromString(userId));
+        return ResponseEntity.noContent().build();
+    }
+    @DeleteMapping("user/profile/delete")
+    public ResponseEntity<Void> deleteUser(@RequestAttribute String userId){
+        userService.deleteUser(UUID.fromString(userId));
+        return ResponseEntity.noContent().build();
+    }
 }

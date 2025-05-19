@@ -9,6 +9,5 @@ import java.math.BigDecimal;
 public record UserRegisterDTO(@NotBlank @Valid String name,
                               @NotBlank String CPF,
                               @NotBlank @Email String email,
-                              @NotBlank String password,
-                              BigDecimal balance ) {
+                              @NotBlank String password) {
 }

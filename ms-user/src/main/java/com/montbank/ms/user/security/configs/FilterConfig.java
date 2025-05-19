@@ -16,7 +16,7 @@ public class FilterConfig {
     public FilterRegistrationBean<TokenFilter> tokenFilter() {
         FilterRegistrationBean<TokenFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new TokenFilter(secret));
-        registrationBean.addUrlPatterns("/cards/*");
+        registrationBean.addUrlPatterns("/user/*");
         return  registrationBean;
 
     }

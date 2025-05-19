@@ -1,5 +1,7 @@
 package com.montbank.ms.user.services;
 
+import com.montbank.ms.user.dtos.UserInformationDTO;
+import com.montbank.ms.user.dtos.UserInformationUpdateDTO;
 import com.montbank.ms.user.dtos.UserRegisterDTO;
 import com.montbank.ms.user.models.UserModel;
 import com.montbank.ms.user.repositories.UserRepository;
@@ -24,6 +26,8 @@ public class UserService {
     BCryptPasswordEncoder encoder;
     @Autowired
     TokenService tokenService;
+    @Autowired
+    MessageSenderService messageSenderService;
 
     @Transactional
     public UserModel save(@Valid UserRegisterDTO userRegisterDTO) {
@@ -31,7 +35,9 @@ public class UserService {
         BeanUtils.copyProperties(userRegisterDTO, userModel);
         userModel.setBalance(new BigDecimal(50));
         userModel.setPassword(encoder.encode(userModel.getPassword()));
-        return userRepository.save(userModel);
+        UserModel savedUser = userRepository.save(userModel);
+        messageSenderService.sendEmail(savedUser.getEmail(), savedUser.getName());
+        return savedUser;
     }
 
     public String loginUser(String email, String password) {
@@ -57,5 +63,21 @@ public class UserService {
         receiver.setBalance(receiver.getBalance().add(amount));
         userRepository.save(sender);
         userRepository.save(receiver);
+    }
+    public UserInformationDTO getUserInformationById(UUID userId){
+        var user = userRepository.findById(userId).orElseThrow(()
+                -> new EntityNotFoundException("Usuário não encontrado"));
+        return  new UserInformationDTO(user.getName(), user.getCPF(), user.getEmail(), user.getBalance());
+    }
+    @Transactional
+    public void updateUserInformation(UserInformationUpdateDTO userInformationUpdateDTO,UUID userId){
+        var user = userRepository.findById(userId).orElseThrow(()
+                -> new EntityNotFoundException("Usuário não encontrado"));
+        BeanUtils.copyProperties(userInformationUpdateDTO,user);
+        userRepository.save(user);
+    }
+    @Transactional
+    public void deleteUser(UUID userId){
+        userRepository.deleteById(userId);
     }
 }

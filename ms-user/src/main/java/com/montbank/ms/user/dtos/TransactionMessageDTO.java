@@ -14,4 +14,5 @@ public class TransactionMessageDTO implements Serializable {
 
         private UUID sender;
         private BigDecimal amount;
-        private UUID receiver;}
+        private UUID receiver;
+}
