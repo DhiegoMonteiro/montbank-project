@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 @RestController
@@ -22,7 +23,13 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserModel> registerUser(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
+    public ResponseEntity<UserModel> registerUser(@RequestBody @Valid UserRegisterDTO userRegisterDTO) throws SQLException {
+        if(userService.userExistsByCPF(userRegisterDTO.CPF())){
+            throw new SQLException("Usuário já registrado com esse CPF, por favor digite outro CPF");
+        }
+        if(userService.userExistsByEmail(userRegisterDTO.email())){
+            throw new SQLException("Usuário já registrado com esse email, por favor digite outro email");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userRegisterDTO));
     }
     @PostMapping("/login")

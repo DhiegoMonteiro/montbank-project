@@ -18,7 +18,9 @@ public class UserModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID userId;
     private String name;
+    @Column (unique = true)
     private String CPF;
+    @Column (unique = true)
     private String email;
     private String password;
     private BigDecimal balance;
