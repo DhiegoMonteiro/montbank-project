@@ -4,6 +4,6 @@ WORKDIR /transaction
 
 COPY target/transaction-0.0.1-SNAPSHOT.jar transaction.jar
 
-EXPOSE 8081
+EXPOSE 8082
 
 ENTRYPOINT ["java", "-jar", "transaction.jar"]

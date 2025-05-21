@@ -4,6 +4,6 @@ WORKDIR /email
 
 COPY target/email-0.0.1-SNAPSHOT.jar email.jar
 
-EXPOSE 8083
+EXPOSE 8084
 
 ENTRYPOINT ["java", "-jar", "email.jar"]

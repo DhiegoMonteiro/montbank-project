@@ -4,6 +4,6 @@ WORKDIR /user
 
 COPY target/ms-user-0.0.1-SNAPSHOT.jar user.jar
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["java", "-jar", "user.jar"]

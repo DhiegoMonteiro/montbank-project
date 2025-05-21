@@ -4,6 +4,6 @@ WORKDIR /cards
 
 COPY target/cards-0.0.1-SNAPSHOT.jar cards.jar
 
-EXPOSE 8082
+EXPOSE 8083
 
 ENTRYPOINT ["java", "-jar", "cards.jar"]
