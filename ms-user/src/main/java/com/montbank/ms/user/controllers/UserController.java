@@ -37,17 +37,17 @@ public class UserController {
         String token = userService.loginUser(userLoginDTO.email(), userLoginDTO.password());
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
-    @GetMapping("user/profile")
+    @GetMapping("/user/profile")
     public ResponseEntity<UserInformationDTO> getUserInformation(@RequestAttribute String userId){
-    return ResponseEntity.status(HttpStatus.FOUND).body(userService.getUserInformationById(UUID.fromString(userId)));
+    return ResponseEntity.status(HttpStatus.OK).body(userService.getUserInformationById(UUID.fromString(userId)));
     }
-    @PutMapping("user/profile/edit")
+    @PutMapping("/user/profile/edit")
     public ResponseEntity<Void> updateUserInformation(UserInformationUpdateDTO userInformationUpdateDTO,
                                                       @RequestAttribute String userId){
         userService.updateUserInformation(userInformationUpdateDTO, UUID.fromString(userId));
         return ResponseEntity.noContent().build();
     }
-    @DeleteMapping("user/profile/delete")
+    @DeleteMapping("/user/profile/delete")
     public ResponseEntity<Void> deleteUser(@RequestAttribute String userId){
         userService.deleteUser(UUID.fromString(userId));
         return ResponseEntity.noContent().build();

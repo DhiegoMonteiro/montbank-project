@@ -42,7 +42,11 @@ public class TokenFilter extends OncePerRequestFilter {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
                 return;
             }
+        } else {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token ausente ou mal formatado");
+                return;
         }
+
     filterChain.doFilter(request,response);
     }
 }
