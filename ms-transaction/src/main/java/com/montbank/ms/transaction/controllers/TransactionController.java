@@ -21,17 +21,21 @@ public class TransactionController {
     TransactionService transactionService;
 
     @GetMapping("/history")
-    public List<TransactionModel> getUserTransactions(@RequestAttribute String userId) {
+    public List<TransactionModel> getUserTransactions(@RequestAttribute String userId,
+                                                      @RequestAttribute String userEmail) {
         if (userId == null) {
             throw new RuntimeException("Usuário não autenticado");
         }
-        return transactionService.getTransactionsBySender(UUID.fromString(userId));
+        return transactionService.getAllUserTransactions(UUID.fromString(userId), userEmail);
     }
 
     @PostMapping("/history/new")
     public ResponseEntity<TransactionModel> sendTransaction(@RequestBody @Valid TransactionRequestDTO transactionRequestDTO,
-                                                            @RequestAttribute String userId) {
-        TransactionModel savedTransaction = transactionService.save(transactionRequestDTO, UUID.fromString(userId));
+                                                            @RequestAttribute String userId,
+                                                            @RequestAttribute String userEmail,
+                                                            @RequestAttribute String name) {
+        TransactionModel savedTransaction = transactionService.save(transactionRequestDTO,
+                                                                    UUID.fromString(userId),name, userEmail);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(savedTransaction);
     }
@@ -45,7 +49,7 @@ public class TransactionController {
 
     @PutMapping("/history/{transactionId}/edit")
     public ResponseEntity<Void> editTransactionTitle(@PathVariable UUID transactionId,
-                                                     TransactionUpdateDTO transactionUpdateDTO,
+                                                     @RequestBody @Valid TransactionUpdateDTO transactionUpdateDTO,
                                                      @RequestAttribute String userId){
         transactionService.updateTransactionTitle(transactionUpdateDTO,UUID.fromString(userId),transactionId);
         return ResponseEntity.noContent().build();

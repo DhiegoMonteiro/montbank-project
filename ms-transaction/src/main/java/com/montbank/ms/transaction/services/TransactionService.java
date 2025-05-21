@@ -24,20 +24,25 @@ public class TransactionService {
     MessageSenderService messageSenderService;
 
     @Transactional
-    public TransactionModel save(TransactionRequestDTO transactionRequestDTO, UUID senderId){
+    public TransactionModel save(TransactionRequestDTO transactionRequestDTO, UUID senderId, String senderName, String senderEmail){
         messageSenderService.sendUserValidationRequest(senderId);
-        messageSenderService.sendUserValidationRequest(transactionRequestDTO.receiver());
+        messageSenderService.sendUserValidationEmailRequest(transactionRequestDTO.receiver());
         var transactionModel = new TransactionModel();
         BeanUtils.copyProperties(transactionRequestDTO, transactionModel);
         transactionModel.setSender(senderId);
+        transactionModel.setSenderName(senderName);
+        transactionModel.setSenderEmail(senderEmail);
         TransactionModel savedTransaction = transactionRepository.save(transactionModel);
         messageSenderService.sendProcessedTransactionEvent(savedTransaction.getSender(),
                                                              savedTransaction.getAmount(),
                                                                 savedTransaction.getReceiver());
         return savedTransaction;
     }
-    public List<TransactionModel> getTransactionsBySender(UUID sender){
-        return transactionRepository.findAllBySender(sender);
+    public List<TransactionModel> getAllUserTransactions(UUID userId, String userEmail){
+        List<TransactionModel> allUserSendTransactions = transactionRepository.findAllBySender(userId);
+        List<TransactionModel> allUserTransactions = transactionRepository.findAllByReceiver(userEmail);
+        allUserTransactions.addAll(allUserSendTransactions);
+        return allUserTransactions;
     }
     @Transactional
     public void deleteTransactionHistory(UUID transactionId, UUID senderId){

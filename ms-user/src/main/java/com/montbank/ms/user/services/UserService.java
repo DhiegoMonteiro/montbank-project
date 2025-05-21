@@ -62,10 +62,10 @@ public class UserService {
     }
 
     @Transactional
-    public void updateBalance(UUID senderID, BigDecimal amount, UUID receiverID){
+    public void updateBalance(UUID senderID, BigDecimal amount, String receiverEmail){
         UserModel sender = userRepository.findById(senderID).orElseThrow(()
                 -> new EntityNotFoundException("Sender não encontrado"));
-        UserModel receiver = userRepository.findById(receiverID).orElseThrow(()
+        UserModel receiver = userRepository.findByEmail(receiverEmail).orElseThrow(()
                 -> new EntityNotFoundException("Receiver não encontrado"));
         sender.setBalance(sender.getBalance().subtract(amount));
         receiver.setBalance(receiver.getBalance().add(amount));

@@ -17,11 +17,15 @@ public class MessageListenerService {
     public void handleUserValidationRequest(String userId){
         boolean userExists = userService.userExists(UUID.fromString(userId));
     }
+    @RabbitListener(queues = "user.validation.email.queue")
+    public void handleUserValidationEmailRequest(String userEmail){
+        boolean userExists = userService.userExistsByEmail(userEmail);
+    }
     @RabbitListener(queues = "processed.transaction.queue")
     public void handleProcessedTransaction(TransactionMessageDTO transactionMessageDTO){
         UUID sender = transactionMessageDTO.getSender();
         BigDecimal amount = transactionMessageDTO.getAmount();
-        UUID receiver = transactionMessageDTO.getReceiver();
+        String receiver = transactionMessageDTO.getReceiver();
         userService.updateBalance(sender, amount, receiver);
     }
 }

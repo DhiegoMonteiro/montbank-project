@@ -16,25 +16,33 @@ public class MessageSenderService {
 
     private final RabbitTemplate rabbitTemplate;
     private final Queue userValidationQueue;
+    private final Queue userValidationEmailQueue;
     private final Queue processedTransactionQueue;
+
 
     @Autowired
     public MessageSenderService(
             RabbitTemplate rabbitTemplate,
             @Qualifier("userValidationQueue") Queue userValidationQueue,
-            @Qualifier("processedTransactionQueue") Queue processedTransactionQueue
+            @Qualifier("processedTransactionQueue") Queue processedTransactionQueue,
+            @Qualifier("userValidationEmailQueue") Queue userValidationEmailQueue
     ) {
         this.rabbitTemplate = rabbitTemplate;
         this.userValidationQueue = userValidationQueue;
         this.processedTransactionQueue = processedTransactionQueue;
+        this.userValidationEmailQueue = userValidationEmailQueue;
         this.rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
     }
 
     public void sendUserValidationRequest(UUID userId){
-        rabbitTemplate.convertAndSend(userValidationQueue.getName(), userId.toString());
+        rabbitTemplate.convertAndSend(userValidationQueue.getName(), userId);
     }
 
-    public void sendProcessedTransactionEvent(UUID sender, BigDecimal amount, UUID receiver){
+    public void sendUserValidationEmailRequest(String userEmail){
+        rabbitTemplate.convertAndSend(userValidationQueue.getName(), userEmail);
+    }
+
+    public void sendProcessedTransactionEvent(UUID sender, BigDecimal amount, String receiver){
         var transactionDTO = new TransactionMessageDTO(sender, amount, receiver);
         rabbitTemplate.convertAndSend(processedTransactionQueue.getName(), transactionDTO);
     }

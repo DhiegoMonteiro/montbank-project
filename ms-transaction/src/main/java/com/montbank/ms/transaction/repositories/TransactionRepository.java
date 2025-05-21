@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface TransactionRepository extends JpaRepository<TransactionModel, UUID> {
     List<TransactionModel> findAllBySender(UUID sender);
+    List<TransactionModel> findAllByReceiver(String receiver);
 }
