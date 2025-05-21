@@ -53,6 +53,14 @@ public class UserService {
         return userRepository.existsById(userId);
     }
 
+    public boolean userExistsByCPF(String CPF){
+        return userRepository.existsByCPF(CPF);
+    }
+
+    public boolean userExistsByEmail(String email){
+        return userRepository.existsByEmail(email);
+    }
+
     @Transactional
     public void updateBalance(UUID senderID, BigDecimal amount, UUID receiverID){
         UserModel sender = userRepository.findById(senderID).orElseThrow(()
