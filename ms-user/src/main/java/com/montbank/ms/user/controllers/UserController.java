@@ -42,8 +42,9 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.OK).body(userService.getUserInformationById(UUID.fromString(userId)));
     }
     @PutMapping("/user/profile/edit")
-    public ResponseEntity<Void> updateUserInformation(UserInformationUpdateDTO userInformationUpdateDTO,
+    public ResponseEntity<Void> updateUserInformation(@RequestBody @Valid UserInformationUpdateDTO userInformationUpdateDTO,
                                                       @RequestAttribute String userId){
+        System.out.println(userInformationUpdateDTO);
         userService.updateUserInformation(userInformationUpdateDTO, UUID.fromString(userId));
         return ResponseEntity.noContent().build();
     }
