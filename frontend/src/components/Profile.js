@@ -1,7 +1,7 @@
 import '../css/forms.css';
 import { useState, useEffect } from 'react';
 
-function Profile({ onClose, setIsLoggedIn }) {
+function Profile({ onClose, setIsLoggedIn, onLogoutClick}) {
   const [formData, setFormData] = useState({
     name: '',
     CPF: '',
@@ -102,8 +102,7 @@ function Profile({ onClose, setIsLoggedIn }) {
         const data = await response.json();
         throw new Error(data.message || 'Erro ao deletar perfil');
       }
-      localStorage.clear();
-      setIsLoggedIn(false);
+      onLogoutClick();
       setTimeout(() => {
         onClose();
       }, 1000);
@@ -115,7 +114,7 @@ function Profile({ onClose, setIsLoggedIn }) {
   };
 
   return (
-    <div className='wrapper'>
+    <div className='wrapperForm'>
       <span className="closeButton" onClick={onClose}>&times;</span>
       <div className='ProfileForm'>
         <h2>Perfil</h2>
@@ -167,7 +166,7 @@ function Profile({ onClose, setIsLoggedIn }) {
           </button>
         </form>
         <button 
-        onClick = {handleDelete}
+        onClick={handleDelete}
           className="buttonDeleteUser"
           disabled={isLoading}
           >

@@ -16,6 +16,7 @@ function App() {
   const [showCards, setShowCards] = useState(false);
   const [showTransactions, setShowTransactions] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
 
 
   const handleLoginClick = () => {
@@ -79,6 +80,14 @@ function App() {
     setShowTransactions(false);
   };
 
+  const handleLogoutClick = () => {
+    setIsLoggedIn(false);
+    localStorage.clear();
+    setUserName('');
+    closeForms();
+  };
+
+
   return (
     <div className="App">
       <HomePage 
@@ -88,10 +97,13 @@ function App() {
         onCardsClick={handleCardsClick}
         onTransactionsClick={handleTransactionsClick}
         onHomeClick={closeForms}
+        onLogoutClick={handleLogoutClick}
+        isLoggedIn={isLoggedIn}
+        userName={userName}
       />
       {showLogin && (
         <div className="modal-container">
-          <Login onClose={closeForms} setIsLoggedIn={setIsLoggedIn}/>
+          <Login onClose={closeForms} setIsLoggedIn={setIsLoggedIn} setUserName={setUserName}/>
         </div>
       )}
       {showRegister && (
@@ -101,7 +113,7 @@ function App() {
       )}
       {showProfile && (
         <div className="modal-container">
-          <Profile onClose={closeForms} setIsLoggedIn ={setIsLoggedIn} />
+          <Profile onClose={closeForms} setIsLoggedIn ={setIsLoggedIn} onLogoutClick={handleLogoutClick} />
         </div>
       )}
       {showCards && (

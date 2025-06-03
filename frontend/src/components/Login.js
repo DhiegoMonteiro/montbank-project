@@ -1,8 +1,9 @@
 import '../css/global.css';
 import '../css/forms.css';
 import { useState } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
-function LoginForm({ onClose, setIsLoggedIn}) {
+function LoginForm({ onClose, setIsLoggedIn, setUserName}) {
   const [formData, setFormData] = useState({
       email: '',
       password: ''
@@ -40,6 +41,11 @@ function LoginForm({ onClose, setIsLoggedIn}) {
         }
 
         localStorage.setItem('authToken', data);
+        const decoded = jwtDecode(data);
+        const userName = decoded.name || '';
+        const firstName = userName.split(' ')[0];
+        setUserName(firstName);
+
 
         setSuccess(true);
         setIsLoggedIn(true);
@@ -63,6 +69,7 @@ function LoginForm({ onClose, setIsLoggedIn}) {
         <h2>Login</h2>
 
         {error && <div className="error-message">{error}</div>}
+        {success && <div className="success-message">Logado com sucesso!</div>}
 
         <form onSubmit={handleSubmit}>
           <div className='inputBoxLogin'>
