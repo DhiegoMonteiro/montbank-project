@@ -19,8 +19,10 @@ function HomePage({ onRegisterClick, onLoginClick, onProfileClick, onCardsClick,
       <div className="buttons">
         {isLoggedIn ? (
           <>
-            <p>Olá, {userName} </p>
-            <button onClick={onLogoutClick} className="logoutButton">Sair</button>
+            <div className='logged'>
+              <p>Olá, <strong>{userName} </strong></p>
+              <button onClick={onLogoutClick} className="logoutButton">Sair</button>
+            </div>
           </>
         ) : (
           <>

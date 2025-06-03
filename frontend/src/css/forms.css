@@ -93,3 +93,207 @@ form{
 .icon{
     font-size: 20px;
 }
+.wrapperForm{
+    position: absolute;
+    display: flex;
+    width: 35%;
+    height: 75%;
+    margin-top: 10%;
+    margin-left: 33%;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    background: transparent;
+    backdrop-filter: blur(20px);
+
+}
+.ProfileForm, .TransactionForm, .CardForm{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.modal{
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 70%;
+    margin-top: 16%;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.800);
+    backdrop-filter: blur(2 0px);
+    box-sizing: border-box;
+}
+.modal-content{
+    display: flex;
+    color: #fff;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.inputBoxProfile{
+    display: flex;
+    width: 200px;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-flow: column;
+    min-width: 200px;
+    flex: 1;
+    border: 2px solid red;
+}
+.inputBoxProfile input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 8px;
+    color: white;
+    margin-top: 5px;
+}
+.inputBoxProfile label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+.cardEditForm{
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+.inputBoxCards{
+    display: flex;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    min-width: 200px;
+    width: 100%;
+    height: 100%;
+}
+.inputBoxCreateCards{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 8%;
+}
+.cardNameNumber{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-left: 38px;
+}
+.cardCvvDate{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-left: 38px;
+}
+.cardOwnerType{
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-left: 38px;
+}
+.inputBoxCards input, .inputBoxCreateCards input {
+    background: rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 8px;
+    color: rgb(0, 0, 0);
+    margin-top: 5px;
+}
+.inputBoxCards label {  
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #fff;
+}
+.buttonCards{
+    font-weight: 500;
+    display: flex;
+    width: 130px;
+    height: 36px;
+    margin-left: auto;
+    margin-right: 20px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 2px solid #fff;
+    background: rgb(0, 0, 48);
+    color: #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: .5s;
+}
+.buttonCards:hover{
+    background: #fff;
+    color: black;
+}
+.generateCardButton{
+    font-weight: 500;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+.generateCardButton button{
+    font-weight: 500;
+    width: 150px;
+    height: 35px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 2px solid #fff;
+    background: rgb(0, 0, 48);
+    color: #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: .5s;
+}
+.generateCardButton button:hover{
+    background: #fff;
+    color: black;
+}
+
+.CardForm ul{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+.CardForm li{   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.listButton{
+    margin-left: 20px;
+    width: 80px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 2px solid #fff;
+    background: rgb(0, 0, 48);
+    color: #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: .5s;
+}
+.listButton:hover{
+    background: #fff;
+    color: black;
+}
