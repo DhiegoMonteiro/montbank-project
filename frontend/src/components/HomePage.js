@@ -11,9 +11,9 @@ function HomePage({ onRegisterClick, onLoginClick, onProfileClick, onCardsClick,
       </div>
       <nav className="navigation">
         <Link onClick={onHomeClick} to="/">Home</Link>
-        <Link onClick={onCardsClick} to="/cards">Cards</Link>
-        <Link onClick={onTransactionsClick} to="/transactions">Transactions</Link>
-        <Link onClick={onProfileClick} to="/profile">Profile</Link>
+        <Link onClick={onCardsClick} to="/cards">Cartões</Link>
+        <Link onClick={onTransactionsClick} to="/transactions">Transações</Link>
+        <Link onClick={onProfileClick} to="/profile">Perfil</Link>
       </nav>
 
       <div className="buttons">

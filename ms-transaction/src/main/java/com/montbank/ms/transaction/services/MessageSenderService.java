@@ -39,7 +39,7 @@ public class MessageSenderService {
     }
 
     public void sendUserValidationEmailRequest(String userEmail){
-        rabbitTemplate.convertAndSend(userValidationQueue.getName(), userEmail);
+        rabbitTemplate.convertAndSend(userValidationEmailQueue.getName(), userEmail);
     }
 
     public void sendProcessedTransactionEvent(UUID sender, BigDecimal amount, String receiver){

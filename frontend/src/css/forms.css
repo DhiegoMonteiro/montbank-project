@@ -1,4 +1,5 @@
-.LoginForm, .RegisterForm{
+.LoginForm,
+.RegisterForm {
     display: flex;
     width: 100%;
     height: 100%;
@@ -7,7 +8,8 @@
     flex-direction: column;
 
 }
-.closeButton{
+
+.closeButton {
     position: absolute;
     background-color: rgb(176, 0, 0);
     border-radius: 5px;
@@ -21,7 +23,7 @@
     display: flex;
 }
 
-.submitButtonLogin{
+.submitButtonLogin {
     background: transparent;
     width: 120px;
     height: 40px;
@@ -37,7 +39,8 @@
     margin-left: 65%;
     transition: .5s;
 }
-.submitButtonRegister{
+
+.submitButtonRegister {
     background: transparent;
     width: 120px;
     height: 40px;
@@ -53,7 +56,9 @@
     margin-left: 65%;
     transition: .5s;
 }
-.submitButtonLogin:hover, .submitButtonRegister:hover{
+
+.submitButtonLogin:hover,
+.submitButtonRegister:hover {
     background: #fff;
     color: black;
 }
@@ -71,14 +76,16 @@
     backdrop-filter: blur(20px);
 
 }
-.inputBoxLogin{
+
+.inputBoxLogin {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 100%;
     margin-top: 50px;
 }
-.inputBoxRegister{
+
+.inputBoxRegister {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -86,33 +93,38 @@
     margin-top: 40px;
 }
 
-form{
+form {
     width: 100%;
 }
 
-.icon{
+.icon {
     font-size: 20px;
 }
-.wrapperForm{
+
+.wrapperForm {
     position: absolute;
     display: flex;
-    width: 35%;
-    height: 75%;
+    width: 550px;
+    height: 650px;
     margin-top: 10%;
-    margin-left: 33%;
+    margin-left: 33.5%;
     border: 2px solid rgba(255, 255, 255, .5);
     border-radius: 10px;
     background: transparent;
     backdrop-filter: blur(20px);
 
 }
-.ProfileForm, .TransactionForm, .CardForm{
+
+.ProfileForm,
+.TransactionForm,
+.CardForm {
     width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
 }
-.modal{
+
+.modal {
     display: flex;
     position: fixed;
     width: 100%;
@@ -124,14 +136,16 @@ form{
     backdrop-filter: blur(2 0px);
     box-sizing: border-box;
 }
-.modal-content{
+
+.modal-content {
     display: flex;
     color: #fff;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
-.inputBoxProfile{
+
+.inputBoxProfile {
     display: flex;
     width: 200px;
     justify-content: center;
@@ -142,6 +156,7 @@ form{
     flex: 1;
     border: 2px solid red;
 }
+
 .inputBoxProfile input {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -150,17 +165,21 @@ form{
     color: white;
     margin-top: 5px;
 }
+
 .inputBoxProfile label {
     font-size: 14px;
     margin-bottom: 5px;
     color: #fff;
 }
-.cardEditForm{
+
+.cardEditForm,
+.transactionEditForm {
     display: flex;
     flex-wrap: wrap;
     height: 100%;
 }
-.inputBoxCards{
+
+.inputBoxCards {
     display: flex;
     width: 200px;
     align-items: center;
@@ -170,7 +189,8 @@ form{
     width: 100%;
     height: 100%;
 }
-.inputBoxCreateCards{
+
+.inputBoxCreateCards {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -180,25 +200,31 @@ form{
     height: 100%;
     margin-top: 8%;
 }
-.cardNameNumber{
+
+.cardNameNumber {
     display: flex;
     justify-content: center;
     gap: 50px;
     margin-left: 38px;
 }
-.cardCvvDate{
+
+.cardCvvDate {
     display: flex;
     justify-content: center;
     gap: 50px;
     margin-left: 38px;
 }
-.cardOwnerType{
+
+.cardOwnerType {
     display: flex;
     justify-content: center;
     gap: 50px;
     margin-left: 38px;
 }
-.inputBoxCards input, .inputBoxCreateCards input {
+
+.inputBoxCards input,
+.inputBoxCreateCards input,
+.inputBoxTransaction input {
     background: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
@@ -206,12 +232,21 @@ form{
     color: rgb(0, 0, 0);
     margin-top: 5px;
 }
-.inputBoxCards label {  
+.inputBoxCreateTransaction input{
+    background: rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 8px;
+    color: rgb(0, 0, 0);
+}
+
+.inputBoxCards label {
     font-size: 14px;
     margin-bottom: 5px;
     color: #fff;
 }
-.buttonCards{
+
+.buttonCards {
     font-weight: 500;
     display: flex;
     width: 130px;
@@ -231,18 +266,22 @@ form{
     font-weight: 500;
     transition: .5s;
 }
-.buttonCards:hover{
+
+.buttonCards:hover {
     background: #fff;
     color: black;
 }
-.generateCardButton{
+
+.generateCardButton,
+.generateTransactionButton {
     font-weight: 500;
     display: flex;
     width: 100%;
     justify-content: center;
     padding-bottom: 10px;
 }
-.generateCardButton button{
+
+.generateCardButton button {
     font-weight: 500;
     width: 150px;
     height: 35px;
@@ -258,12 +297,122 @@ form{
     font-size: 0.8em;
     transition: .5s;
 }
-.generateCardButton button:hover{
+
+.generateCardButton button:hover {
     background: #fff;
     color: black;
 }
 
-.CardForm ul{
+.generateTransactionButton button {
+    font-weight: 500;
+    width: 200px;
+    height: 35px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 2px solid #fff;
+    background: rgb(0, 0, 48);
+    color: #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: .5s;
+}
+
+.generateTransactionButton button:hover {
+    background: #fff;
+    color: black;
+}
+.saldo{
+    margin-left: 75%;
+    margin-top: -5%;
+    width: 20%;
+    color: #fff;
+}
+.inputBoxTransaction {
+    display: flex;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    min-width: 200px;
+    width: 100%;
+    height: 100%;
+}
+
+.transactionIdTitle {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-left: 38px;
+}
+
+.transactionValorSender {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    margin-left: 38px;
+}
+
+.transactionEmailReceiver {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    margin-left: 38px;
+}
+.transactionDate{
+    display: flex;
+    justify-content: center;
+    margin-left: 35px;
+    margin-bottom: 20px;
+}
+
+.inputBoxCreateTransaction {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 6%;
+}
+
+.buttonTransactions {
+    font-weight: 500;
+    display: flex;
+    width: 130px;
+    height: 36px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: 20px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 2px solid #fff;
+    background: rgb(0, 0, 48);
+    color: #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: .5s;
+}
+
+.buttonTransactions:hover {
+    background: #fff;
+    color: black;
+}
+.cardsList,
+.transactionsList {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 10px
+}
+
+.CardForm ul,
+.TransactionForm ul {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -271,13 +420,16 @@ form{
     gap: 10px;
     width: 100%;
 }
-.CardForm li{   
+
+.CardForm li,
+.TransactionForm li {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
 }
-.listButton{
+
+.listButton {
     margin-left: 20px;
     width: 80px;
     height: 30px;
@@ -293,7 +445,33 @@ form{
     font-size: 0.8em;
     transition: .5s;
 }
-.listButton:hover{
+
+.listButton:hover {
     background: #fff;
     color: black;
+}
+.success-message,
+.error-message {
+  position: absolute;
+  top: 14%; 
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 3px;
+  border-radius: 5px;
+  z-index: 999;
+  font-weight: bold;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }

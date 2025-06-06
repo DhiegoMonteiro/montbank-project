@@ -10,13 +10,13 @@ import java.util.UUID;
 
 @Entity
 @Getter @Setter
-@Table (name = "USERS_TRANSACTIONS")
+@Table (name = "TB_TRANSACTIONS")
 public class TransactionModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID transactionID;
+    private UUID transactionId;
     private UUID sender;
     private String senderName;
     private String senderEmail;
