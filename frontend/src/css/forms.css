@@ -6,21 +6,18 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-
 }
 
 .closeButton {
     position: absolute;
-    background-color: rgb(176, 0, 0);
-    border-radius: 5px;
-    height: 25px;
-    width: 25px;
-    margin-left: 0.25px;
-    font-size: 1.5em;
+    top: 10px;
+    left: 15px;
+    font-size: 1.5rem;
+    color: white;
     cursor: pointer;
-    justify-content: center;
-    align-items: center;
-    display: flex;
+    background: transparent;
+    border: none;
+    z-index: 1010;
 }
 
 .submitButtonLogin {
@@ -65,16 +62,18 @@
 
 .wrapper {
     position: fixed;
-    display: flex;
-    width: 400px;
-    height: 400px;
-    border: 2px solid rgba(255, 255, 255, .5);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    padding: 2rem;
+    border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 10px;
-    margin-top: 15%;
-    margin-left: 37%;
     background: transparent;
     backdrop-filter: blur(20px);
-
+    z-index: 1000;
 }
 
 .inputBoxLogin {
@@ -104,14 +103,15 @@ form {
 .wrapperForm {
     position: absolute;
     display: flex;
-    width: 550px;
-    height: 650px;
+    width: 700px;
+    height: 630px;
     margin-top: 10%;
-    margin-left: 33.5%;
+    margin-left: 30%;
     border: 2px solid rgba(255, 255, 255, .5);
     border-radius: 10px;
     background: transparent;
     backdrop-filter: blur(20px);
+    z-index: 1000;
 
 }
 
@@ -145,17 +145,22 @@ form {
     width: 100%;
 }
 
+.profile {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+}
+
 .inputBoxProfile {
     display: flex;
-    width: 200px;
     justify-content: center;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    flex-flow: column;
-    min-width: 200px;
+    align-items: center;
     flex: 1;
-    border: 2px solid red;
+    gap: 14px;
 }
+
 
 .inputBoxProfile input {
     background: rgba(255, 255, 255, 0.1);
@@ -164,13 +169,48 @@ form {
     padding: 8px;
     color: white;
     margin-top: 5px;
+    width: 300px;
 }
 
-.inputBoxProfile label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #fff;
+
+.profileButtons {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 80px;
 }
+
+.buttonDeleteUser,
+.submitButtonProfile {
+    margin-left: 20px;
+    width: 110px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 2px solid #fff;
+    background: rgb(0, 0, 48);
+    color: #fff;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: .5s;
+}
+
+.buttonDeleteUser:hover {
+    background: red;
+}
+
+.submitButtonProfile:hover {
+    background: #fff;
+    color: black;
+}
+
+.userId {
+    color: black;
+}
+
 
 .cardEditForm,
 .transactionEditForm {
@@ -204,27 +244,28 @@ form {
 .cardNameNumber {
     display: flex;
     justify-content: center;
-    gap: 50px;
-    margin-left: 38px;
+    gap: 100px;
+    margin-left: 100px;
 }
 
 .cardCvvDate {
     display: flex;
     justify-content: center;
-    gap: 50px;
-    margin-left: 38px;
+    gap: 100px;
+    margin-left: 100px;
 }
 
 .cardOwnerType {
     display: flex;
     justify-content: center;
     gap: 50px;
-    margin-left: 38px;
+    margin-left: 100px;
 }
 
 .inputBoxCards input,
 .inputBoxCreateCards input,
-.inputBoxTransaction input {
+.inputBoxTransaction input,
+.inputBoxProfile input {
     background: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
@@ -232,7 +273,8 @@ form {
     color: rgb(0, 0, 0);
     margin-top: 5px;
 }
-.inputBoxCreateTransaction input{
+
+.inputBoxCreateTransaction input {
     background: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
@@ -252,7 +294,7 @@ form {
     width: 130px;
     height: 36px;
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: 70px;
     justify-content: center;
     align-items: center;
     background: transparent;
@@ -280,6 +322,7 @@ form {
     justify-content: center;
     padding-bottom: 10px;
 }
+
 
 .generateCardButton button {
     font-weight: 500;
@@ -324,12 +367,14 @@ form {
     background: #fff;
     color: black;
 }
-.saldo{
-    margin-left: 75%;
-    margin-top: -5%;
-    width: 20%;
+
+.saldo {
+    margin-left: 72%;
+    margin-top: -4%;
+    width: 130px;
     color: #fff;
 }
+
 .inputBoxTransaction {
     display: flex;
     width: 200px;
@@ -345,26 +390,27 @@ form {
     display: flex;
     justify-content: center;
     gap: 50px;
-    margin-left: 38px;
+    margin-left: 70px;
 }
 
 .transactionValorSender {
     display: flex;
     justify-content: center;
-    gap: 70px;
-    margin-left: 38px;
+    gap: 100px;
+    margin-left: 70px;
 }
 
 .transactionEmailReceiver {
     display: flex;
     justify-content: center;
-    gap: 70px;
-    margin-left: 38px;
+    gap: 130px;
+    margin-left: 90px;
 }
-.transactionDate{
+
+.transactionDate {
     display: flex;
     justify-content: center;
-    margin-left: 35px;
+    margin-left: 90px;
     margin-bottom: 20px;
 }
 
@@ -382,9 +428,9 @@ form {
     display: flex;
     width: 130px;
     height: 36px;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: 60px;
     justify-content: center;
     align-items: center;
     background: transparent;
@@ -403,6 +449,7 @@ form {
     background: #fff;
     color: black;
 }
+
 .cardsList,
 .transactionsList {
     width: 100%;
@@ -421,8 +468,7 @@ form {
     width: 100%;
 }
 
-.CardForm li,
-.TransactionForm li {
+.CardForm li {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -450,28 +496,31 @@ form {
     background: #fff;
     color: black;
 }
+
 .success-message,
 .error-message {
-  position: absolute;
-  top: 14%; 
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 2px 3px;
-  border-radius: 5px;
-  z-index: 999;
-  font-weight: bold;
-  text-align: center;
-  white-space: nowrap;
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 3px;
+    border-radius: 5px;
+    z-index: 999;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .success-message {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
 .error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
+
+@media (max-width: 768px) {}

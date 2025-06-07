@@ -49,6 +49,7 @@ function RegisterForm({ onClose }) {
       
     } catch (err) {
       setError(err.message || 'Ocorreu um erro durante o registro');
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +74,7 @@ function RegisterForm({ onClose }) {
               onChange={handleChange}
               required 
             />
-            <label>Name</label>
+            <label>Nome</label>
           </div>
           <div className='inputBoxRegister'>
             <ion-icon className="icon" name="id-card-outline"></ion-icon>

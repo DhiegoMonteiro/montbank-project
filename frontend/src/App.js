@@ -43,6 +43,7 @@ function App() {
     setShowCards(false);
     setShowTransactions(false);
     } else{
+      closeForms();
       setShowLogin(true);
     }
   };
@@ -55,6 +56,7 @@ function App() {
     setShowRegister(false);
     setShowTransactions(false);
     } else{
+      closeForms();
       setShowLogin(true);
     }
   };
@@ -67,6 +69,7 @@ function App() {
     setShowRegister(false);
     setShowCards(false);
     } else{
+      closeForms();
       setShowLogin(true);
     }
     
@@ -113,7 +116,7 @@ function App() {
       )}
       {showProfile && (
         <div className="modal-container">
-          <Profile onClose={closeForms} setIsLoggedIn ={setIsLoggedIn} onLogoutClick={handleLogoutClick} />
+          <Profile onClose={closeForms} onLogoutClick={handleLogoutClick} />
         </div>
       )}
       {showCards && (
