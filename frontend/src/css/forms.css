@@ -91,6 +91,12 @@
     width: 100%;
     margin-top: 40px;
 }
+.inputBoxRegister input, .inputBoxLogin input{
+    border-radius: 5px;
+    padding: 3px;
+    color: rgb(0, 0, 0);
+    margin-top: 5px;
+}
 
 form {
     width: 100%;
@@ -101,20 +107,21 @@ form {
 }
 
 .wrapperForm {
-    position: absolute;
-    display: flex;
-    width: 700px;
-    height: 630px;
-    margin-top: 10%;
-    margin-left: 30%;
-    border: 2px solid rgba(255, 255, 255, .5);
-    border-radius: 10px;
-    background: transparent;
-    backdrop-filter: blur(20px);
-    z-index: 1000;
-
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  width: 90%;
+  max-width: 700px;
+  height: 630px;
+  padding: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  z-index: 1000;
 }
-
 .ProfileForm,
 .TransactionForm,
 .CardForm {
@@ -125,24 +132,32 @@ form {
 }
 
 .modal {
-    display: flex;
-    position: fixed;
-    width: 100%;
-    height: 70%;
-    margin-top: 16%;
-    border: 2px solid rgba(255, 255, 255, .5);
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.800);
-    backdrop-filter: blur(2 0px);
-    box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 1000px;
+  height: 70%;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  box-sizing: border-box;
+  z-index: 1000;
 }
 
 .modal-content {
-    display: flex;
-    color: #fff;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; 
 }
 
 .profile {
@@ -166,7 +181,7 @@ form {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
-    padding: 8px;
+    padding: 5px;
     color: white;
     margin-top: 5px;
     width: 300px;
@@ -207,11 +222,6 @@ form {
     color: black;
 }
 
-.userId {
-    color: black;
-}
-
-
 .cardEditForm,
 .transactionEditForm {
     display: flex;
@@ -243,23 +253,20 @@ form {
 
 .cardNameNumber {
     display: flex;
-    justify-content: center;
-    gap: 100px;
-    margin-left: 100px;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .cardCvvDate {
     display: flex;
-    justify-content: center;
-    gap: 100px;
-    margin-left: 100px;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .cardOwnerType {
     display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin-left: 100px;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .inputBoxCards input,
@@ -269,7 +276,7 @@ form {
     background: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
-    padding: 8px;
+    padding: 5px;
     color: rgb(0, 0, 0);
     margin-top: 5px;
 }
@@ -278,7 +285,7 @@ form {
     background: rgb(255, 255, 255);
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 5px;
-    padding: 8px;
+    padding: 5px;
     color: rgb(0, 0, 0);
 }
 
@@ -294,7 +301,7 @@ form {
     width: 130px;
     height: 36px;
     margin-left: auto;
-    margin-right: 70px;
+    margin-right: 20px;
     justify-content: center;
     align-items: center;
     background: transparent;
@@ -388,30 +395,27 @@ form {
 
 .transactionIdTitle {
     display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin-left: 70px;
+    margin-left: 40px;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .transactionValorSender {
     display: flex;
-    justify-content: center;
-    gap: 100px;
-    margin-left: 70px;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .transactionEmailReceiver {
     display: flex;
-    justify-content: center;
-    gap: 130px;
-    margin-left: 90px;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .transactionDate {
     display: flex;
     justify-content: center;
-    margin-left: 90px;
-    margin-bottom: 20px;
+    width: 100%;
 }
 
 .inputBoxCreateTransaction {
@@ -430,7 +434,7 @@ form {
     height: 36px;
     margin-top: 30px;
     margin-left: auto;
-    margin-right: 60px;
+    margin-right: 20px;
     justify-content: center;
     align-items: center;
     background: transparent;
@@ -508,7 +512,7 @@ form {
     z-index: 999;
     font-weight: bold;
     text-align: center;
-    white-space: nowrap;
+    white-space: wrap;
 }
 
 .success-message {
@@ -522,5 +526,30 @@ form {
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
+@media (max-width: 768px){
+    .saldo{
+        display: flex;
+        justify-content: center;
+        margin: 0;
+        width: 100%;
+        padding: 2px;
+        margin-bottom: 2px;
+        font-size: 1em;
+    }
+    .transactionIdTitle,
+    .transactionValorSender,
+    .transactionEmailReceiver,
+    .transactionDate {
+        margin-left: 10px;
+        overflow: hidden;
+    }
+    .cardCvvDate,
+    .cardNameNumber,
+    .cardOwnerType{
+        overflow: hidden;
+    }
+    .cardOwnerType{
+        margin-left: 10px;
+    }
 
-@media (max-width: 768px) {}
+}

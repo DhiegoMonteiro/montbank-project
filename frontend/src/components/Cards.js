@@ -31,6 +31,7 @@ function Cards({ onClose }) {
       setCards(data);
     } catch (err) {
       setError("Não foi possivel listar seus cartões, por favor, tente novamente mais tarde.");
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -70,6 +71,7 @@ function Cards({ onClose }) {
       fetchCards();
     } catch (err) {
       setError(err.message);
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -114,6 +116,7 @@ function Cards({ onClose }) {
       fetchCards();
     } catch (err) {
       setError(err.message);
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -138,6 +141,7 @@ function Cards({ onClose }) {
       fetchCards();
     } catch (err) {
       setError(err.message);
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -159,15 +163,17 @@ function Cards({ onClose }) {
             <p>Nenhum cartão cadastrado.</p>
           </div>
         ) : (
-          <ul>
-            {cards.map((card) => (
-              <li key={card.cardId}>
-                <strong>{card.cardName} - {card.type} </strong> 
-                <button className='listButton' onClick={() => openEditModal(card)}>Visualizar</button>
-                <button className='listButton' onClick={() => handleDeleteCard(card.cardId)}>Deletar</button>
-              </li>
-            ))}
-          </ul>
+          <div className='cardsList'>
+            <ul>
+              {cards.map((card) => (
+                <li key={card.cardId}>
+                  <strong>{card.cardName} - {card.type} </strong>
+                  <button className='listButton' onClick={() => openEditModal(card)}>Visualizar</button>
+                  <button className='listButton' onClick={() => handleDeleteCard(card.cardId)}>Deletar</button>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {showCreateModal && (

@@ -57,6 +57,7 @@ function LoginForm({ onClose, setIsLoggedIn, setUserName}) {
         
       } catch (err) {
         setError(err.message || 'Ocorreu um erro durante o login');
+        setTimeout(() => setError(null), 2000);
       } finally {
         setIsLoading(false);
       }

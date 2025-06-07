@@ -1,5 +1,6 @@
 import '../css/forms.css';
 import { useState, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
 
 function Transactions({ onClose }) {
   const [transactions, setTransactions] = useState([]);
@@ -22,6 +23,9 @@ function Transactions({ onClose }) {
   const [formData, setFormData] = useState({
     balance: ''
   });
+  
+  const decoded = jwtDecode(localStorage.getItem('authToken'));
+  const userEmail = decoded.email;
 
   const fetchTransactions = async () => {
     setIsLoading(true);
@@ -90,6 +94,7 @@ function Transactions({ onClose }) {
         });
       } catch (err) {
         setError(err.message);
+        setTimeout(() => setError(null), 2000);
       } finally {
         setIsLoading(false);
       }
@@ -116,10 +121,11 @@ function Transactions({ onClose }) {
       }
       setShowCreateModal(false);
       setnewTransaction({ amount: '', receiver: '', title: '' });
-      fetchTransactions();
-      fetchBalance();
+      await fetchTransactions();
+      await fetchBalance();
     } catch (err) {
       setError(err.message);
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -156,13 +162,14 @@ function Transactions({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao editar título da transação');
+        throw new Error(data.message || 'Erro ao editar título da transação, apenas quem a enviou pode editar.');
       }
       setShowEditModal(false);
       setCurrentTransaction(null);
       fetchTransactions();
     } catch (err) {
       setError(err.message);
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -182,11 +189,12 @@ function Transactions({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao deletar transação');
+        throw new Error(data.message || 'Erro ao deletar transação, apenas quem a enviou pode fazer a deleção.');
       }
       fetchTransactions();
     } catch (err) {
       setError(err.message);
+      setTimeout(() => setError(null), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -211,15 +219,25 @@ function Transactions({ onClose }) {
           </div>
         ) : (
           <div className='transactionsList'>
-            <ul>
-              {transactions.map((transaction) => (
-                <li key={transaction.transactionId}>
-                  <strong>{transaction.title} - {transaction.receiver}</strong>
-                  <button className='listButton' onClick={() => openEditModal(transaction)}>Visualizar</button>
-                  <button className='listButton' onClick={() => handleDeleteTransaction(transaction.transactionId)}>Deletar</button>
-                </li>
-              ))}
-            </ul>
+           <ul>
+    {transactions.map((transaction) => {
+      const isSent = transaction.senderEmail === userEmail;
+      return (
+        <li key={transaction.transactionId} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0' }}>
+          <div>
+            <strong>{transaction.title} - {transaction.receiver} </strong> - 
+            <span style={{ color: isSent ? 'red' : 'green', marginLeft: '5px' }}>
+              {isSent ? 'Enviada' : 'Recebida'}
+            </span>
+          </div>
+          <div>
+            <button className='listButton' onClick={() => openEditModal(transaction)}>Visualizar</button>
+            <button className='listButton' onClick={() => handleDeleteTransaction(transaction.transactionId)}>Deletar</button>
+          </div>
+        </li>
+      );
+    })}
+  </ul>
           </div>
         )}
 

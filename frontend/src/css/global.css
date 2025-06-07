@@ -22,7 +22,7 @@ strong{
     color:aliceblue;
     text-decoration: underline;
 }
-p{
+p, label, .icon{
     color: #fff ;
 }
 header {
@@ -35,17 +35,18 @@ header {
     align-items: center;
     z-index: 99;
 }
-.logo-container{
+.logo-container {
     display: flex;
     align-items: center;
-}
-.logo-img{
-    width: 100px;
-    height: 100px;
-}
 
+}
+.logo-img {
+    width: 10vw;
+    max-width: 100px;
+    height: auto;
+}
 .logo {
-    font-size: 2.2em;
+    font-size: 2.0em;
     color: #fff;
     user-select: none;
 }
@@ -53,7 +54,11 @@ header {
 .navigation {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
     width: 55%;
+    min-width: 250px;
+    margin-left: 12px;
 }
 
 .navigation a {
@@ -63,6 +68,7 @@ header {
     color: #fff;
     text-decoration: none;
     font-weight: 500;
+    transition: color 0.3s ease;
 }
 
 .navigation a::after {
@@ -82,18 +88,17 @@ header {
     transform: scaleX(1);
 }
 
-.loginButton, .registerButton{
-    width: 100px;
-    height: 50px;
+.loginButton, .registerButton {
+    width: 8rem;
+    height: 3rem;
     background: transparent;
     border: 2px solid #fff;
-    outline: none;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1.1em;
+    font-size: 1em;
     color: #fff;
     font-weight: 500;
-    margin-left: 20px;
+    margin-left: 1rem;
     transition: .5s;
 }
 
@@ -101,10 +106,11 @@ header {
     background: #fff;
     color: black;
 }
-.logged{
+.logged {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
 }
 .logoutButton{
     display: flex;
@@ -124,6 +130,23 @@ header {
 }
 .logoutButton:hover{
     background: red;
+}
+
+@media (max-width: 1268px){
+    .logo-container{
+        font-size: 0.8em;
+    }
+    .logo-img{
+        font-size: 0.2em;
+    }
+    .loginButton, .registerButton {
+    width: 5rem;
+    height: 2rem;
+    font-size: 0.8em;
+}
+.buttons{
+    width: 8rem;
+}
 }
 
 @media (max-width: 768px) {
