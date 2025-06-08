@@ -1,12 +1,12 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   cloud:
     gateway:
       routes:
         - id: user
-          uri: http://user:8081
+          uri: http://user:8082
           predicates:
             - Path=/api/auth/**
           filters:
@@ -14,7 +14,7 @@ spring:
 
 
         - id: transaction
-          uri: http://transaction:8082
+          uri: http://transaction:8083
           predicates:
             - Path=/api/transactions/**
           filters:
@@ -22,7 +22,7 @@ spring:
 
 
         - id: cards
-          uri: http://cards:8083
+          uri: http://cards:8084
           predicates:
             - Path=/api/cards/**
           filters:

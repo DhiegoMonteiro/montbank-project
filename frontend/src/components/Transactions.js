@@ -31,7 +31,7 @@ function Transactions({ onClose }) {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/api/transactions/history', {
+      const response = await fetch('http://localhost:8081/api/transactions/history', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -77,7 +77,7 @@ function Transactions({ onClose }) {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch('http://localhost:8080/api/auth/user/profile', {
+        const response = await fetch('http://localhost:8081/api/auth/user/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -107,7 +107,7 @@ function Transactions({ onClose }) {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/api/transactions/history/new', {
+      const response = await fetch('http://localhost:8081/api/transactions/history/new', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ function Transactions({ onClose }) {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:8080/api/transactions/history/${currentTransaction.transactionId}/edit`, {
+      const response = await fetch(`http://localhost:8081/api/transactions/history/${currentTransaction.transactionId}/edit`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -176,12 +176,12 @@ function Transactions({ onClose }) {
   };
 
   const handleDeleteTransaction = async (transactionId) => {
-    if (!window.confirm('Tem certeza que deseja deletar o histórico de transação?, esta operação não retornará o dinheiro e será irreversível.')) return;
+    if (!window.confirm('Tem certeza que deseja deletar o histórico de transação? esta operação não retornará o dinheiro e será irreversível.')) return;
 
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:8080/api/transactions/history/${transactionId}/delete`, {
+      const response = await fetch(`http://localhost:8081/api/transactions/history/${transactionId}/delete`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`

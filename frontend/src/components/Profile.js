@@ -21,7 +21,7 @@ function Profile({ onClose, onLogoutClick}) {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await fetch('http://localhost:8080/api/auth/user/profile', {
+        const response = await fetch('http://localhost:8081/api/auth/user/profile', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -64,7 +64,7 @@ function Profile({ onClose, onLogoutClick}) {
 
     const request = JSON.stringify(formData);
     try {
-      const response = await fetch('http://localhost:8080/api/auth/user/profile/edit', {
+      const response = await fetch('http://localhost:8081/api/auth/user/profile/edit', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ function Profile({ onClose, onLogoutClick}) {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/user/profile/delete', {
+      const response = await fetch('http://localhost:8081/api/auth/user/profile/delete', {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`

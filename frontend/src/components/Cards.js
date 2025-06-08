@@ -18,7 +18,7 @@ function Cards({ onClose }) {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/api/cards/my-cards', {
+      const response = await fetch('http://localhost:8081/api/cards/my-cards', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
@@ -54,7 +54,7 @@ function Cards({ onClose }) {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('http://localhost:8080/api/cards/my-cards/create', {
+      const response = await fetch('http://localhost:8081/api/cards/my-cards/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ function Cards({ onClose }) {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:8080/api/cards/my-cards/${currentCard.cardId}/edit`, {
+      const response = await fetch(`http://localhost:8081/api/cards/my-cards/${currentCard.cardId}/edit`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ function Cards({ onClose }) {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:8080/api/cards/my-cards/${cardId}/delete`, {
+      const response = await fetch(`http://localhost:8081/api/cards/my-cards/${cardId}/delete`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('authToken')}`
