@@ -23,9 +23,6 @@ public class TransactionController {
     @GetMapping("/history")
     public List<TransactionModel> getUserTransactions(@RequestAttribute String userId,
                                                       @RequestAttribute String userEmail) {
-        if (userId == null) {
-            throw new RuntimeException("Usuário não autenticado");
-        }
         return transactionService.getAllUserTransactions(UUID.fromString(userId), userEmail);
     }
 

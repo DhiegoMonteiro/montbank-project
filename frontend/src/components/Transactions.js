@@ -117,7 +117,7 @@ function Transactions({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao efetuar transação');
+        throw new Error(data.error || data.message || 'Erro ao efetuar transação');
       }
       setShowCreateModal(false);
       setnewTransaction({ amount: '', receiver: '', title: '' });
@@ -162,7 +162,7 @@ function Transactions({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao editar título da transação, apenas quem a enviou pode editar.');
+        throw new Error(data.error || data.message || 'Erro ao editar título da transação, apenas quem a enviou pode editar.');
       }
       setShowEditModal(false);
       setCurrentTransaction(null);
@@ -189,7 +189,7 @@ function Transactions({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao deletar transação, apenas quem a enviou pode fazer a deleção.');
+        throw new Error(data.error || data.message || 'Erro ao deletar transação, apenas quem a enviou pode fazer a deleção.');
       }
       fetchTransactions();
     } catch (err) {
@@ -247,6 +247,7 @@ function Transactions({ onClose }) {
             <span className="closeButton" onClick={() => setShowCreateModal(false)}>&times;</span>
             <div className="modal-content">
               <h3>Efetuar nova transação</h3>
+               {error && <div className="error-message">{error}</div>}
               <form onSubmit={handleNewTransaction}>
                 <div className='inputBoxCreateTransaction'>
                   <label>Titulo da Transação:</label>
@@ -291,6 +292,7 @@ function Transactions({ onClose }) {
             <span className="closeButton" onClick={() => setShowEditModal(false)}>&times;</span>
             <div className="modal-content">
               <h3>Editar Transação</h3>
+               {error && <div className="error-message">{error}</div>}
               <form className='transactionEditForm' onSubmit={handleEditTransaction}>
                 <div className='transactionIdTitle'>
                   <div className='inputBoxTransaction'>

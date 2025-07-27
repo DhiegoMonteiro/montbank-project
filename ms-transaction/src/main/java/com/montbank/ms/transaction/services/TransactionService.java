@@ -2,6 +2,7 @@ package com.montbank.ms.transaction.services;
 
 import com.montbank.ms.transaction.dtos.TransactionRequestDTO;
 import com.montbank.ms.transaction.dtos.TransactionUpdateDTO;
+import com.montbank.ms.transaction.exceptions.BusinessException;
 import com.montbank.ms.transaction.models.TransactionModel;
 import com.montbank.ms.transaction.repositories.TransactionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,8 +27,35 @@ public class TransactionService {
 
     @Transactional
     public TransactionModel save(TransactionRequestDTO transactionRequestDTO, UUID senderId, String senderName, String senderEmail){
-        messageSenderService.sendUserValidationRequest(senderId);
-        messageSenderService.sendUserValidationEmailRequest(transactionRequestDTO.receiver());
+        if (transactionRequestDTO.title() == null ||
+                transactionRequestDTO.title().length() < 5 ||
+                transactionRequestDTO.title().length() > 25) {
+            throw new BusinessException("O título da transação deve ter entre 5 e 25 caracteres.");
+        }
+        if (transactionRequestDTO.amount() == null || transactionRequestDTO.amount().compareTo(BigDecimal.ZERO) == 0) {
+            throw new BusinessException("O valor da transação não pode ser zero.");
+        }
+        Boolean senderExists = messageSenderService.sendUserValidationRequest(senderId);
+        if (senderExists == null) {
+            throw new BusinessException("Timeout na validação do usuário remetente");
+        }
+        if (!senderExists) {
+            throw new BusinessException("Usuário remetente não encontrado");
+        }
+        Boolean receiverExists = messageSenderService.sendUserValidationEmailRequest(transactionRequestDTO.receiver());
+        if (receiverExists == null) {
+            throw new BusinessException("Timeout na validação do usuário receptor");
+        }
+        if (!receiverExists) {
+            throw new BusinessException("Usuário receptor não encontrado");
+        }
+        Boolean hasBalance = messageSenderService.sendUserValidationBalanceQueue(senderId, transactionRequestDTO.amount());
+        if (hasBalance == null) {
+            throw new BusinessException("Erro ou timeout ao validar o saldo do usuário remetente.");
+        }
+        if (!hasBalance) {
+            throw new BusinessException("Saldo insuficiente para realizar a transação.");
+        }
         var transactionModel = new TransactionModel();
         BeanUtils.copyProperties(transactionRequestDTO, transactionModel);
         transactionModel.setSender(senderId);
@@ -39,6 +68,9 @@ public class TransactionService {
         return savedTransaction;
     }
     public List<TransactionModel> getAllUserTransactions(UUID userId, String userEmail){
+        if (userId == null) {
+            throw new BusinessException("Usuário não autenticado");
+        }
         List<TransactionModel> allUserSendTransactions = transactionRepository.findAllBySender(userId);
         List<TransactionModel> allUserTransactions = transactionRepository.findAllByReceiver(userEmail);
         allUserTransactions.addAll(allUserSendTransactions);
@@ -56,6 +88,11 @@ public class TransactionService {
     }
     @Transactional
     public void updateTransactionTitle(TransactionUpdateDTO transactionUpdateDTO, UUID userId, UUID transactionId){
+        if (transactionUpdateDTO.title() == null ||
+                transactionUpdateDTO.title().length() < 5 ||
+                transactionUpdateDTO.title().length() > 25) {
+            throw new BusinessException("O título da transação deve ter entre 5 e 25 caracteres.");
+        }
         TransactionModel transaction = transactionRepository.findById(transactionId).orElseThrow(()
                 -> new EntityNotFoundException("Transação não encontrada"));
         if(transaction.getSender().equals(userId)){
