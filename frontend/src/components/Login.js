@@ -37,7 +37,7 @@ function LoginForm({ onClose, setIsLoggedIn, setUserName}) {
         const data = await response.text();
   
         if (!response.ok) {
-          throw new Error(data.message || 'Credenciais inválidas.');
+          throw new Error(data.error || data.message || 'Credenciais inválidas.');
         }
 
         localStorage.setItem('authToken', data);

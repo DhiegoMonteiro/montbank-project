@@ -75,8 +75,9 @@ function Profile({ onClose, onLogoutClick}) {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao atualizar perfil');
+        throw new Error(data.error || data.message || 'Erro ao atualizar perfil');
       }
+    
       setSuccess(true);
       setTimeout(() => {
         onClose();
@@ -107,7 +108,7 @@ function Profile({ onClose, onLogoutClick}) {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao deletar perfil');
+        throw new Error(data.error || data.message || 'Erro ao deletar perfil');
       }
       onLogoutClick();
       setTimeout(() => {

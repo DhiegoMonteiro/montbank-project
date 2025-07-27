@@ -3,6 +3,7 @@ package com.montbank.ms.user.services;
 import com.montbank.ms.user.dtos.UserInformationDTO;
 import com.montbank.ms.user.dtos.UserInformationUpdateDTO;
 import com.montbank.ms.user.dtos.UserRegisterDTO;
+import com.montbank.ms.user.exceptions.BusinessException;
 import com.montbank.ms.user.models.UserModel;
 import com.montbank.ms.user.repositories.UserRepository;
 import com.montbank.ms.user.security.services.TokenService;
@@ -30,7 +31,22 @@ public class UserService {
     MessageSenderService messageSenderService;
 
     @Transactional
-    public UserModel save(@Valid UserRegisterDTO userRegisterDTO) {
+    public UserModel save(UserRegisterDTO userRegisterDTO) {
+        if(userExistsByCPF(userRegisterDTO.CPF())){
+            throw new BusinessException("Usuário já registrado com esse CPF, por favor digite outro CPF");
+        }
+        if(userExistsByEmail(userRegisterDTO.email())){
+            throw new BusinessException("Usuário já registrado com esse email, por favor digite outro email");
+        }
+        if (userRegisterDTO.name().length() < 5) {
+            throw new BusinessException("O nome de usuário deve ter no mínimo 5 caracteres.");
+        }
+        if (userRegisterDTO.CPF().length() != 11) {
+            throw new BusinessException("O CPF deve conter 11 caracteres (apenas números).");
+        }
+        if (userRegisterDTO.password().length() < 5) {
+            throw new BusinessException("A senha deve ter no mínimo 5 caracteres.");
+        }
         var userModel = new UserModel();
         BeanUtils.copyProperties(userRegisterDTO, userModel);
         userModel.setBalance(new BigDecimal(50));
@@ -79,8 +95,24 @@ public class UserService {
     }
     @Transactional
     public void updateUserInformation(UserInformationUpdateDTO userInformationUpdateDTO,UUID userId){
+        if (userInformationUpdateDTO.name().length() < 5) {
+            throw new BusinessException("O nome de usuário deve ter no mínimo 5 caracteres.");
+        }
+        if (userInformationUpdateDTO.CPF().length() != 11) {
+            throw new BusinessException("O CPF deve conter 11 caracteres (apenas números).");
+        }
         var user = userRepository.findById(userId).orElseThrow(()
                 -> new EntityNotFoundException("Usuário não encontrado"));
+        if (!userInformationUpdateDTO.email().equals(user.getEmail())) {
+            if (userRepository.existsByEmail(userInformationUpdateDTO.email())) {
+                throw new BusinessException("Usuário já registrado com esse email, por favor digite outro email");
+            }
+        }
+        if(!userInformationUpdateDTO.CPF().equals(user.getCPF())){
+            if (userRepository.existsByCPF(userInformationUpdateDTO.CPF())) {
+                throw new BusinessException("Usuário já registrado com esse CPF, por favor digite outro CPF");
+            }
+        }
         BeanUtils.copyProperties(userInformationUpdateDTO,user);
         userRepository.save(user);
     }
@@ -88,4 +120,11 @@ public class UserService {
     public void deleteUser(UUID userId){
         userRepository.deleteById(userId);
     }
+
+    public boolean getBalanceValidation(UUID senderID, BigDecimal amount){
+        UserModel user = userRepository.findById(senderID)
+                .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+        return user.getBalance().compareTo(amount) >= 0;
+    }
+
 }

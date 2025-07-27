@@ -23,6 +23,9 @@ public class RabbitMQConfig {
     public Queue userValidationEmailQueue(){
         return new Queue("user.validation.email.queue", true, false, false);
     }
+    @Bean Queue userValidationBalanceQueue(){
+        return new Queue("user.validation.balance.queue", true, false , false);
+    }
 
     @Bean
     public Queue processedTransactionQueue(){

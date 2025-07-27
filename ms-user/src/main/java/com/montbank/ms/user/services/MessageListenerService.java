@@ -1,5 +1,6 @@
 package com.montbank.ms.user.services;
 
+import com.montbank.ms.user.dtos.TransactionCheckBalanceDTO;
 import com.montbank.ms.user.dtos.TransactionMessageDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,19 @@ public class MessageListenerService {
     UserService userService;
 
     @RabbitListener(queues = "user.validation.queue")
-    public void handleUserValidationRequest(String userId){
-        boolean userExists = userService.userExists(UUID.fromString(userId));
+    public boolean handleUserValidationRequest(String userId){
+        return userService.userExists(UUID.fromString(userId));
     }
+
     @RabbitListener(queues = "user.validation.email.queue")
-    public void handleUserValidationEmailRequest(String userEmail){
-        boolean userExists = userService.userExistsByEmail(userEmail);
+    public boolean handleUserValidationEmailRequest(String userEmail){
+        return userService.userExistsByEmail(userEmail);
+    }
+    @RabbitListener(queues = "user.validation.balance.queue")
+    public Boolean handleUserValidationBalanceRequest(TransactionCheckBalanceDTO transactionCheckBalanceDTO){
+            UUID sender = transactionCheckBalanceDTO.getSender();
+            BigDecimal amount = transactionCheckBalanceDTO.getAmount();
+            return userService.getBalanceValidation(sender, amount);
     }
     @RabbitListener(queues = "processed.transaction.queue")
     public void handleProcessedTransaction(TransactionMessageDTO transactionMessageDTO){

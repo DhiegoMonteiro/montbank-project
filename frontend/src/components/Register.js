@@ -36,8 +36,9 @@ function RegisterForm({ onClose }) {
 
       const data = await response.json();
 
+      
       if (!response.ok) {
-        throw new Error(data.message || 'Não foi possível concluir o registro');
+        throw new Error(data.error || data.message || 'Não foi possível concluir o registro');
       }
 
       setSuccess(true);
