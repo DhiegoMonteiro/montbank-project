@@ -21,18 +21,12 @@ public class CardController {
 
     @GetMapping("/my-cards")
     public List<CardModel> getUserCards(@RequestAttribute String userId) {
-        if (userId == null) {
-            throw new RuntimeException("Usuário não autenticado");
-        }
         return cardService.getCardsByOwner(UUID.fromString(userId));
     }
     @PostMapping("/my-cards/create")
     public ResponseEntity<CardModel> newCard(@RequestBody @Valid CardDTO cardDTO,
                                                      @RequestAttribute String userId,
                                              @RequestAttribute String name) {
-        if (userId == null) {
-            throw new RuntimeException("Usuário não autenticado");
-        }
         return ResponseEntity.status(HttpStatus.CREATED).body(cardService.generateCard(cardDTO,
                 UUID.fromString(userId), name));
     }

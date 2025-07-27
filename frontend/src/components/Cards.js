@@ -64,7 +64,7 @@ function Cards({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao criar cartão');
+        throw new Error(data.error || data.message || 'Erro ao criar cartão');
       }
       setShowCreateModal(false);
       setNewCard({ cardName: '', type: '' });
@@ -109,7 +109,7 @@ function Cards({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao editar cartão');
+        throw new Error(data.error || data.message || 'Erro ao editar cartão');
       }
       setShowEditModal(false);
       setCurrentCard(null);
@@ -136,7 +136,7 @@ function Cards({ onClose }) {
       });
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.message || 'Erro ao deletar cartão');
+        throw new Error(data.error || data.message || 'Erro ao deletar cartão');
       }
       fetchCards();
     } catch (err) {
@@ -181,6 +181,7 @@ function Cards({ onClose }) {
             <span className="closeButton" onClick={() => setShowCreateModal(false)}>&times;</span>
             <div className="modal-content">
               <h3>Gerar Novo Cartão</h3>
+               {error && <div className="error-message">{error}</div>}
               <form onSubmit={handleCreateCard}>
                 <div className='inputBoxCreateCards'>
                   <label>Nome do Cartão</label>
@@ -227,6 +228,7 @@ function Cards({ onClose }) {
             <span className="closeButton" onClick={() => setShowEditModal(false)}>&times;</span>
             <div className="modal-content">
               <h3>Editar Cartão</h3>
+               {error && <div className="error-message">{error}</div>}
               <form className='cardEditForm' onSubmit={handleEditCard}>
                 <div className='cardNameNumber'>
                   <div className='inputBoxCards'>

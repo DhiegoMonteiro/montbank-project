@@ -1,6 +1,7 @@
 package com.montbank.ms.cards.services;
 
 import com.montbank.ms.cards.dtos.CardDTO;
+import com.montbank.ms.cards.exceptions.BusinessException;
 import com.montbank.ms.cards.models.CardModel;
 import com.montbank.ms.cards.repositories.CardRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,11 +24,26 @@ public class CardService {
     CardRepository cardRepository;
 
     public List<CardModel> getCardsByOwner(UUID ownerId) {
+        if (ownerId == null) {
+            throw new BusinessException("Usuário não autenticado");
+        }
         return cardRepository.findAllByOwner(ownerId);
     }
 
     @Transactional
     public CardModel generateCard(CardDTO cardDTO, UUID ownerId, String ownerName) {
+        if (ownerId == null) {
+            throw new BusinessException("Usuário não autenticado");
+        }
+        if (cardDTO.cardName() == null ||
+                cardDTO.cardName().length() < 5 ||
+                cardDTO.cardName().length() > 15) {
+            throw new BusinessException("O nome do cartão deve ter entre 5 e 15 caracteres.");
+        }
+        if (cardDTO.type() == null ||
+                !(cardDTO.type() .equalsIgnoreCase("crédito") || cardDTO.type() .equalsIgnoreCase("débito"))) {
+            throw new BusinessException("O tipo do cartão deve ser 'Crédito' ou 'Débito'.");
+        }
         CardModel card = new CardModel();
         card.setOwner(ownerId);
         card.setCardName(cardDTO.cardName());
@@ -73,6 +89,15 @@ public class CardService {
     }
     @Transactional
     public void updateCard(CardDTO cardDTO, UUID userId, UUID cardId){
+        if (cardDTO.cardName() == null ||
+                cardDTO.cardName().length() < 5 ||
+                cardDTO.cardName().length() > 15) {
+            throw new BusinessException("O nome do cartão deve ter entre 5 e 15 caracteres.");
+        }
+        if (cardDTO.type() == null ||
+                !(cardDTO.type() .equalsIgnoreCase("crédito") || cardDTO.type() .equalsIgnoreCase("débito"))) {
+            throw new BusinessException("O tipo do cartão deve ser 'Crédito' ou 'Débito'.");
+        }
         CardModel card = cardRepository.findById(cardId).orElseThrow(()
                 -> new EntityNotFoundException("Cartão não encontrado"));
         if(card.getOwner().equals(userId)){
