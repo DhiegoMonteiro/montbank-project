@@ -1,42 +1,52 @@
+version: '3.8'
+
 services:
 
   rabbitmq:
     image: 'rabbitmq:3-management'
     container_name: rabbitmq
     environment:
-      - 'RABBITMQ_DEFAULT_PASS=guest'
-      - 'RABBITMQ_DEFAULT_USER=guest'
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    expose:
+      - '5672'
     ports:
-      - '5672:5672'
       - '15672:15672'
+    networks:
+      - backend-network
 
   postgres:
     image: 'postgres:15-alpine'
     container_name: postgres
     environment:
-      - 'POSTGRES_DB=montbank'
-      - 'POSTGRES_PASSWORD=montpass'
-      - 'POSTGRES_USER=postgres'
-    ports:
-      - '5432:5432'
+      - POSTGRES_DB=montbank
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=montpass
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    expose:
+      - '5432'
+    networks:
+      - backend-network
+
   user:
     build: ./ms-user
     container_name: user
     depends_on:
-     - postgres
-     - rabbitmq
-    ports:
-      - '8082:8082'
+      - postgres
+      - rabbitmq
     environment:
-      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/montbank'
-      SPRING_DATASOURCE_USERNAME: 'postgres'
-      SPRING_DATASOURCE_PASSWORD: 'montpass'
-      SPRING_RABBITMQ_HOST: 'rabbitmq'
-      SPRING_RABBITMQ_PORT: '5672'
-      SPRING_RABBITMQ_USERNAME: 'guest'
-      SPRING_RABBITMQ_PASSWORD: 'guest'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/montbank
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: montpass
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    expose:
+      - '8082'
+    networks:
+      - backend-network
 
   transaction:
     build: ./ms-transaction
@@ -44,28 +54,32 @@ services:
     depends_on:
       - postgres
       - rabbitmq
-    ports:
-      - '8083:8083'
     environment:
-      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/montbank'
-      SPRING_DATASOURCE_USERNAME: 'postgres'
-      SPRING_DATASOURCE_PASSWORD: 'montpass'
-      SPRING_RABBITMQ_HOST: 'rabbitmq'
-      SPRING_RABBITMQ_PORT: '5672'
-      SPRING_RABBITMQ_USERNAME: 'guest'
-      SPRING_RABBITMQ_PASSWORD: 'guest'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/montbank
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: montpass
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    expose:
+      - '8083'
+    networks:
+      - backend-network
 
   cards:
     build: ./ms-cards
     container_name: cards
     depends_on:
       - postgres
-    ports:
-      - '8084:8084'
     environment:
-      SPRING_DATASOURCE_URL: 'jdbc:postgresql://postgres:5432/montbank'
-      SPRING_DATASOURCE_USERNAME: 'postgres'
-      SPRING_DATASOURCE_PASSWORD: 'montpass'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/montbank
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: montpass
+    expose:
+      - '8084'
+    networks:
+      - backend-network
 
   email:
     build: ./ms-email
@@ -73,13 +87,15 @@ services:
     depends_on:
       - rabbitmq
       - user
-    ports:
-      - '8085:8085'
     environment:
-      SPRING_RABBITMQ_HOST: 'rabbitmq'
-      SPRING_RABBITMQ_PORT: '5672'
-      SPRING_RABBITMQ_USERNAME: 'guest'
-      SPRING_RABBITMQ_PASSWORD: 'guest'
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    expose:
+      - '8085'
+    networks:
+      - backend-network
 
   gateway:
     build: ./api-gateway
@@ -90,6 +106,8 @@ services:
       - cards
     ports:
       - '8081:8081'
+    networks:
+      - backend-network
 
   frontend:
     build: ./frontend
@@ -98,5 +116,12 @@ services:
       - gateway
     ports:
       - '8080:8080'
+    networks:
+      - backend-network
+
 volumes:
   postgres_data:
+
+networks:
+  backend-network:
+    driver: bridge
