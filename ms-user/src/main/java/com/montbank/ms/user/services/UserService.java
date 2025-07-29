@@ -41,7 +41,7 @@ public class UserService {
         if (userRegisterDTO.name().length() < 5) {
             throw new BusinessException("O nome de usuário deve ter no mínimo 5 caracteres.");
         }
-        if (userRegisterDTO.CPF().length() != 11) {
+        if (userRegisterDTO.CPF().length() != 11 || !userRegisterDTO.CPF().matches("\\d{11}")) {
             throw new BusinessException("O CPF deve conter 11 caracteres (apenas números).");
         }
         if (userRegisterDTO.password().length() < 5) {
@@ -98,7 +98,7 @@ public class UserService {
         if (userInformationUpdateDTO.name().length() < 5) {
             throw new BusinessException("O nome de usuário deve ter no mínimo 5 caracteres.");
         }
-        if (userInformationUpdateDTO.CPF().length() != 11) {
+        if (userInformationUpdateDTO.CPF().length() != 11 || !userInformationUpdateDTO.CPF().matches("\\d{11}")) {
             throw new BusinessException("O CPF deve conter 11 caracteres (apenas números).");
         }
         var user = userRepository.findById(userId).orElseThrow(()
